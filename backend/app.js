@@ -17,7 +17,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+const port = 3001;
+
+mongoose
+    .connect("mongodb://127.0.0.1:27017/Pokedex", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log("Connected to the database");
+    })
+    .catch((error) => {
+        console.error("Error connecting to the database:", error);
+    });
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
 
 module.exports = app;
