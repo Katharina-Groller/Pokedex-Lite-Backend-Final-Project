@@ -16,7 +16,15 @@ const pokemonSchema = new mongoose.Schema({
         require: true
     },
     attacks: {
-        type: String,
+        light: {
+            type: Array,
+        },
+        medium: {
+            type: Array
+        },
+        strong: {
+            type: Array
+        },
         require: true
     },
 });
