@@ -28,6 +28,7 @@ async function httpFindSingleUser(req, res, next) {
         next(error);
     }
 }
+
 async function httpUpdateUser(req, res, next) {
     try {
         const { id } = req.params;

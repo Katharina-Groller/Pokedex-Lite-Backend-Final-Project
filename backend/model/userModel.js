@@ -28,3 +28,4 @@ async function updateUser(id, data) {
 }
 
 module.exports = { User, createUser, findAllUser, findSingleUser, updateUser };
+
