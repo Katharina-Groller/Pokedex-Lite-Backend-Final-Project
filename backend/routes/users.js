@@ -2,6 +2,7 @@ const express = require("express");
 const {
     httpCreateUser,
     httpFindAllUser,
+    httpFindSingleUser,
 } = require("../controller/userController");
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.post("/signup", httpCreateUser);
 /* Login */
 
 /* GET Single User (by ID) */
+router.route("/:id").get(httpFindSingleUser);
 
 module.exports = router;
