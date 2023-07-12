@@ -25,6 +25,6 @@ router.post("/signup", httpCreateUser);
 /* Login */
 
 /* GET Single User (by ID) */
-router.route("/:id").get(httpFindSingleUser).put(httpUpdateUser);
+router.route("/:id").get(httpFindSingleUser);
 
 module.exports = router;
