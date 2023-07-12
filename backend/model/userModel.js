@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { userSchema } = require("./userSchema");
 const { UserRoles } = require("../lib/security/roles");
-// const {userNotFound}= require("")
+const { userNotFound } = require("../middleware/userValidation");
 
 //Model
 const User = mongoose.model("User", userSchema);
@@ -17,4 +17,9 @@ async function findAllUser() {
     return await User.find({});
 }
 
-module.exports = { createUser, findAllUser };
+async function findSingleUser(id) {
+    await userNotFound(User, id);
+    return await User.findById(id);
+}
+
+module.exports = { createUser, findAllUser, findSingleUser };

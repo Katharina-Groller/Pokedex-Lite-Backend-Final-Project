@@ -28,4 +28,19 @@ const userSchema = new mongoose.Schema({
     },
 });
 
+//wird verwendet um das eingegebene Passwort mit dem verschlü. passwort des benutzers zu vergleichen
+userSchema.methods.authenticate = async function (password) {
+    const user = this;
+    return await bcrypt.compare(password, user.password);
+};
+
+//wird verwendet um das Passwort aus dem Benutzerobjekt zu entfernen.
+//Ohne ist ein sicherheitsrisiko, wenn passwort dann an den client geschickt wird so verhindern wir dies.
+//passwort verschwindet (im ThunderClient) beim abrufen/get.
+userSchema.methods.toJSON = function () {
+    const user = this.toObject();
+    delete user.password;
+    return user;
+};
+
 module.exports = { userSchema };
