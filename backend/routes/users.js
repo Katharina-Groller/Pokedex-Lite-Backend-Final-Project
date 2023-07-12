@@ -3,6 +3,7 @@ const {
     httpCreateUser,
     httpFindAllUser,
     httpFindSingleUser,
+    httpUpdateUser,
 } = require("../controller/userController");
 const router = express.Router();
 
@@ -24,6 +25,6 @@ router.post("/signup", httpCreateUser);
 /* Login */
 
 /* GET Single User (by ID) */
-router.route("/:id").get(httpFindSingleUser);
+router.route("/:id").get(httpFindSingleUser).put(httpUpdateUser);
 
 module.exports = router;

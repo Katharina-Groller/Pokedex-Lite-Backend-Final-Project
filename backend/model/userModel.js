@@ -22,4 +22,9 @@ async function findSingleUser(id) {
     return await User.findById(id);
 }
 
-module.exports = { createUser, findAllUser, findSingleUser };
+async function updateUser(id, data) {
+    await userNotFound(User, id);
+    return await User.findOneAndUpdate({ _id: id }, data, { new: true });
+}
+
+module.exports = { User, createUser, findAllUser, findSingleUser, updateUser };
