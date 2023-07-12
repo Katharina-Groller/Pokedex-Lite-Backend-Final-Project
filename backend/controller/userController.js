@@ -1,4 +1,4 @@
-const { createUser } = require("../model/userModel");
+const { createUser, findAllUser } = require("../model/userModel");
 // const{createToken}=require("")
 
 async function httpCreateUser(req, res, next) {
@@ -10,4 +10,8 @@ async function httpCreateUser(req, res, next) {
         next(error);
     }
 }
-module.exports = { httpCreateUser };
+async function httpFindAllUser(req, res) {
+    const users = await findAllUser();
+    res.json(users);
+}
+module.exports = { httpCreateUser, httpFindAllUser };
