@@ -18,15 +18,7 @@ async function authenticateToken(req, res, next) {
     }
 }
 
-async function userNotFound(Model, id) {
-    const user = await Model.findOne({ _id: id });
-    if (!user) {
-        const error = new Error("Benutzer nicht gefunden");
-        error.statusCode = 404;
-        throw error;
-    }
-    return user;
-}
+
 
 const protectAdminRoute = (req, res, next) => {
     const user = req.user;
@@ -39,4 +31,4 @@ const protectAdminRoute = (req, res, next) => {
     }
 }
 
-module.exports = { authenticateToken, protectAdminRoute, userNotFound }
+module.exports = { authenticateToken, protectAdminRoute }
