@@ -18,6 +18,7 @@ async function authenticateToken(req, res, next) {
     }
 }
 
+
 async function userNotFound(User, id) {
     const user = await User.findOne({ _id: id });
     if (!user) {
@@ -38,5 +39,6 @@ const protectAdminRoute = (req, res, next) => {
         return next(error);
     }
 };
+
 
 module.exports = { authenticateToken, protectAdminRoute, userNotFound };
