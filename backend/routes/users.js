@@ -5,32 +5,49 @@ const {
     httpFindSingleUser,
     httpUpdateUser,
     httpDeleteUser,
+    httpAuthenticateUser,
 } = require("../controller/userController");
+const {
+    authenticateToken,
+    protectAdminRoute,
+} = require("../middleware/userValidation");
+const { validationInputs } = require("../middleware/inputValidation");
+const { userValidationRules } = require("../lib/rules/userRules");
 const router = express.Router();
 
 /* GET users listing. */
-router.get("/", function (req, res, next) {
+// /users
+router.get("/", authenticateToken, function (req, res, next) {
     res.send("respond with a resource");
 });
 
 /* GET all User */
-//ToDo: token implement and admin rights implement
-router.get("/allUser", httpFindAllUser);
-
-/* GET all Pokemon */
+// /users/allUser
+router.get("/allUser", authenticateToken, protectAdminRoute, httpFindAllUser);
 
 /* SIGNUP (CreateUser) */
-//ToDO: InputValidation implement
-router.post("/signup", httpCreateUser);
+router.post(
+    "/signup",
+    validationInputs(userValidationRules.signup),
+    httpCreateUser
+);
 
 /* Login */
+router.post(
+    "/login",
+    validationInputs(userValidationRules.login),
+    httpAuthenticateUser
+);
 
 /* GET Single User (by ID) */
-//todo: authenticate token with .use(auth.token)
 router
+    .use(authenticateToken)
     .route("/:id")
     .get(httpFindSingleUser)
     .put(httpUpdateUser)
     .delete(httpDeleteUser);
+//------------------------------
+
+/* GET all Pokemon */
 
 module.exports = router;

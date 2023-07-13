@@ -1,6 +1,4 @@
-
-const { createUser } = require("../model/userModel");
-const { createToken } = require("../lib/security/token")
+const { createToken } = require("../lib/security/token");
 
 const {
     createUser,
@@ -10,8 +8,6 @@ const {
     deleteUser,
     authenticateUser,
 } = require("../model/userModel");
-
-
 
 async function httpCreateUser(req, res, next) {
     try {
@@ -58,12 +54,22 @@ async function httpDeleteUser(req, res, next) {
 async function httpAuthenticateUser(req, res, next) {
     try {
         const { username, password } = req.body;
-        const user = await authenticateUser(usernmae, password);
+        const user = await authenticateUser(username, password);
         if (!user) {
             const error = new Error("Username oder Passwort sind Falsch");
             error.statusCode = 400;
             throw error;
         }
+        const token = await createToken(
+            {
+                username: user.username,
+                password: user.password,
+                role: user.role,
+            },
+            //???
+            "token-secret"
+        );
+        res.json({ user, token });
     } catch (error) {
         next(error);
     }
@@ -74,4 +80,5 @@ module.exports = {
     httpFindSingleUser,
     httpUpdateUser,
     httpDeleteUser,
+    httpAuthenticateUser,
 };
