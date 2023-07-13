@@ -1,10 +1,15 @@
+
+const { createUser } = require("../model/userModel");
+const { createToken } = require("../lib/security/token")
+
 const {
     createUser,
     findAllUser,
     findSingleUser,
     updateUser,
 } = require("../model/userModel");
-// const{createToken}=require("")
+
+
 
 async function httpCreateUser(req, res, next) {
     try {
