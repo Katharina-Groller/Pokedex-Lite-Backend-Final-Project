@@ -7,6 +7,8 @@ const {
     findAllUser,
     findSingleUser,
     updateUser,
+    deleteUser,
+    authenticateUser,
 } = require("../model/userModel");
 
 
@@ -43,9 +45,33 @@ async function httpUpdateUser(req, res, next) {
         next(error);
     }
 }
+
+async function httpDeleteUser(req, res, next) {
+    try {
+        const { id } = req.params;
+        await deleteUser(id);
+        res.sendStatus(204);
+    } catch (error) {
+        next(error);
+    }
+}
+async function httpAuthenticateUser(req, res, next) {
+    try {
+        const { username, password } = req.body;
+        const user = await authenticateUser(usernmae, password);
+        if (!user) {
+            const error = new Error("Username oder Passwort sind Falsch");
+            error.statusCode = 400;
+            throw error;
+        }
+    } catch (error) {
+        next(error);
+    }
+}
 module.exports = {
     httpCreateUser,
     httpFindAllUser,
     httpFindSingleUser,
     httpUpdateUser,
+    httpDeleteUser,
 };

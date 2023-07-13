@@ -4,6 +4,7 @@ const {
     httpFindAllUser,
     httpFindSingleUser,
     httpUpdateUser,
+    httpDeleteUser,
 } = require("../controller/userController");
 const router = express.Router();
 
@@ -25,6 +26,11 @@ router.post("/signup", httpCreateUser);
 /* Login */
 
 /* GET Single User (by ID) */
-router.route("/:id").get(httpFindSingleUser).put(httpUpdateUser);
+//todo: authenticate token with .use(auth.token)
+router
+    .route("/:id")
+    .get(httpFindSingleUser)
+    .put(httpUpdateUser)
+    .delete(httpDeleteUser);
 
 module.exports = router;
