@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 //File Imports
-const UserRoles = require("../lib/security/roles");
+const { UserRoles } = require("../lib/security/roles");
 
 //User Schema
 const userSchema = new mongoose.Schema({
@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
         default: UserRoles.USER,
     },
 });
+
 userSchema.pre("save", async function (next) {
     const user = this;
     if (user.isModified("password")) {
