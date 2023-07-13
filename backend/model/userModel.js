@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { userSchema } = require("./userSchema");
 const { UserRoles } = require("../lib/security/roles");
-const { userNotFound } = require("../middleware/userValidation");
+const { userNotFound } = require("../middleware/errorHandler");
 
 //Model
 //(Schnittstelle zur Datenbank)
@@ -46,11 +46,14 @@ async function deleteUser(User, id) {
 }
 
 async function authenticateUser(username, password) {
+    console.log("ander", username, password);
     const user = await User.findOne({ username });
+    console.log("User:", user);
     if (!user) {
         return null;
     }
     const passwortValid = await user.authenticate(password);
+    console.log("password:", passwortValid);
     if (!passwortValid) {
         return null;
     }

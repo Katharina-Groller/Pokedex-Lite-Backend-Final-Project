@@ -27,6 +27,28 @@ const userSchema = new mongoose.Schema({
         default: UserRoles.USER,
     },
 });
+userSchema.pre("save", async function (next) {
+    const user = this;
+    if (user.isModified("password")) {
+        user.password = await bcrypt.hash(user.password, 10);
+    }
+
+    next();
+});
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+    const update = this.getUpdate();
+    if (update.password) {
+        try {
+            const hashedPassword = await bcrypt.hash(update.password, 10);
+            this.setUpdate({ password: hashedPassword });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    next();
+});
 
 //wird verwendet um das eingegebene Passwort mit dem verschlü. passwort des benutzers zu vergleichen
 userSchema.methods.authenticate = async function (password) {

@@ -18,17 +18,6 @@ async function authenticateToken(req, res, next) {
     }
 }
 
-
-async function userNotFound(User, id) {
-    const user = await User.findOne({ _id: id });
-    if (!user) {
-        const error = new Error("Benutzer nicht gefunden");
-        error.statusCode = 404;
-        throw error;
-    }
-    return user;
-}
-
 const protectAdminRoute = (req, res, next) => {
     const user = req.user;
     if (user.role === UserRoles.ADMIN) {
@@ -40,5 +29,4 @@ const protectAdminRoute = (req, res, next) => {
     }
 };
 
-
-module.exports = { authenticateToken, protectAdminRoute, userNotFound };
+module.exports = { authenticateToken, protectAdminRoute };

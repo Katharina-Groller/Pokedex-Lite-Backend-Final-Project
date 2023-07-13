@@ -17,4 +17,4 @@ async function userNotFound(Model, id) {
     return user;
 }
 
-module.exports = { errorHandler, userNotFound }
+module.exports = { errorHandler, userNotFound };
