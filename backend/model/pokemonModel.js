@@ -16,12 +16,19 @@ async function createPokemon(pokemonData) {
     return await Pokemon.create(pokemonData);
 }
 
+//Find all Pokemon
+async function findAllPokemon() {
+    return await Pokemon.find({});
+}
+
 //User add Pokemon
 async function addPokemon(name, id) {
     //nutzer aus der datenbank holen über id
     const user = await User.findById(id);
+
     // basis werte aus der datenbank holen(das pokemon) über name
     const includePokemon = await Pokemon.findOne({ name });
+
     //schreib die basiswerte in das array vom nutzer
     user.pokemonList.push({
         name,
@@ -35,12 +42,12 @@ async function addPokemon(name, id) {
     }
 
     //nutzer wieder in die datenbank speichern
-
     return await User.findOneAndUpdate(
         { _id: id },
-        { pokemonList: user.pokemonList }
+        { pokemonList: user.pokemonList },
+        { new: true } /* hinzugefügtes Pokemon wird auch angezeigt*/
     );
 }
 
 //exports
-module.exports = { createPokemon, addPokemon };
+module.exports = { createPokemon, findAllPokemon, addPokemon };

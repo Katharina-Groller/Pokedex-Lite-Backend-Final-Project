@@ -1,4 +1,8 @@
-const { createPokemon, addPokemon } = require("../model/pokemonModel");
+const {
+    createPokemon,
+    findAllPokemon,
+    addPokemon,
+} = require("../model/pokemonModel");
 
 async function httpCreatePokemon(req, res, next) {
     try {
@@ -9,6 +13,11 @@ async function httpCreatePokemon(req, res, next) {
         next(error);
     }
 }
+
+async function httpFindAllPokemon(req, res) {
+    const pokemons = await findAllPokemon();
+    res.json(pokemons);
+}
 async function httpAddPokemon(req, res, next) {
     try {
         const { name, id } = req.body;
@@ -18,10 +27,9 @@ async function httpAddPokemon(req, res, next) {
             return res.status(400).send({ message: "Invalid pokemon" });
         }
         res.json(availablePokemon);
-        console.log(availablePokemon);
     } catch (error) {
         next(error);
     }
 }
 
-module.exports = { httpCreatePokemon, httpAddPokemon };
+module.exports = { httpCreatePokemon, httpFindAllPokemon, httpAddPokemon };
