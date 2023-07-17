@@ -1,34 +1,57 @@
 const mongoose = require("mongoose");
 
-
 const pokemonSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true,
-        unique: true
+        required: true,
+        // unique: true,
     },
     kp: {
         type: Number,
-        require: true
+        required: true,
     },
     mp: {
         type: Number,
-        require: true
+        required: true,
     },
     attacks: {
-        light: {
-            type: Array,
-        },
-        medium: {
-            type: Array
-        },
-        strong: {
-            type: Array
-        },
-        require: true
+        // light: {
+        //     type: Array,
+        // },
+        // medium: {
+        //     type: Array,
+        // },
+        // strong: {
+        //     type: Array,
+        // },
     },
 });
 
+const availablePokemonSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        // unique: true,
+    },
+    kp: {
+        type: Number,
+        required: true,
+    },
+    mp: {
+        type: Number,
+        required: true,
+    },
+    attacks: {
+        // light: {
+        //     type: Array,
+        // },
+        // medium: {
+        //     type: Array,
+        // },
+        // strong: {
+        //     type: Array,
+        // },
+    },
+});
 
-module.exports = { pokemonSchema }
-
+module.exports = { pokemonSchema, availablePokemonSchema };
