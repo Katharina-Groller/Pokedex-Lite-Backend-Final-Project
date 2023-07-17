@@ -17,4 +17,12 @@ async function userNotFound(Model, id) {
     return user;
 }
 
-module.exports = { errorHandler, userNotFound };
+async function pokemonNotFound(model, name) {
+    const pokemon = await Model.findOne({ name: name });
+    if (!pokemon) {
+        const error = new Error("Pokemon nicht gefunden");
+        error.statusCode = 404;
+        throw error;
+    }
+}
+module.exports = { errorHandler, userNotFound, pokemonNotFound };

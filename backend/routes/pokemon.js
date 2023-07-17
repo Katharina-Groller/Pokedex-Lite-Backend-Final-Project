@@ -1,8 +1,9 @@
 const express = require("express");
 const {
     httpCreatePokemon,
-    httpAddPokemon,
+    httpFindSinglePokemon,
     httpFindAllPokemon,
+    httpAddPokemon,
 } = require("../controller/pokemonController");
 const router = express.Router();
 
@@ -21,5 +22,8 @@ router.post("/createPokemon", httpCreatePokemon);
 // Add Pokemon to user
 // /pokemon/addPokemon
 router.post("/addPokemon", httpAddPokemon);
+
+//GET single Pokemon
+router.route("/:name").get(httpFindSinglePokemon);
 
 module.exports = router;

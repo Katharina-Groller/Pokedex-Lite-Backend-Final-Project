@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
-const { pokemonSchema, availablePokemonSchema } = require("./pokemonSchema");
+const { pokemonSchema } = require("./pokemonSchema");
 const { User } = require("./userModel");
+const { pokemonNotFound } = require("../middleware/errorHandler");
 
 //Model
 const Pokemon = mongoose.model("Pokemon", pokemonSchema);
-const availablePokemon = mongoose.model(
-    "AvailablePokemon",
-    availablePokemonSchema
-);
 
 //async functions
 
@@ -19,6 +16,17 @@ async function createPokemon(pokemonData) {
 //Find all Pokemon
 async function findAllPokemon() {
     return await Pokemon.find({});
+}
+
+//Find Single User
+async function findSinglePokemon(name) {
+    const pokemon = await Pokemon.findOne({ name });
+    if (pokemon === null) {
+        const error = new Error("Pokemon existiert nicht");
+        error.statusCode = 404;
+        throw error;
+    }
+    return await Pokemon.findOne({ name });
 }
 
 //User add Pokemon
@@ -50,4 +58,9 @@ async function addPokemon(name, id) {
 }
 
 //exports
-module.exports = { createPokemon, findAllPokemon, addPokemon };
+module.exports = {
+    createPokemon,
+    findAllPokemon,
+    findSinglePokemon,
+    addPokemon,
+};
