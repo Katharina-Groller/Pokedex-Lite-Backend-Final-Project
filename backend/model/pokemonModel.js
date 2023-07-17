@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { pokemonSchema, availablePokemonSchema } = require("./pokemonSchema");
 const { User } = require("./userModel");
+const UserRoles = require("../lib/security/roles")
 
 //Model
 const Pokemon = mongoose.model("Pokemon", pokemonSchema);
@@ -41,6 +42,16 @@ async function addPokemon(name, id) {
         { pokemonList: user.pokemonList }
     );
 }
+
+// async function deletePokemon(name) {
+//     const user = await User.findById(id);
+//     if (user.role !== UserRoles.ADMIN) {
+//         const error = new Error("Unzureichende Berechtigungen");
+//         error.statusCode = 403;
+//         throw error
+//     }
+
+// }
 
 //exports
 module.exports = { createPokemon, addPokemon };
