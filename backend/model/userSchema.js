@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 
 //File Imports
 const { UserRoles } = require("../lib/security/roles");
+const { pokemonSchema } = require("./pokemonSchema");
 
 //User Schema
 const userSchema = new mongoose.Schema({
@@ -26,6 +27,7 @@ const userSchema = new mongoose.Schema({
         enum: Object.values(UserRoles),
         default: UserRoles.USER,
     },
+    pokemonList: [pokemonSchema],
 });
 
 userSchema.pre("save", async function (next) {

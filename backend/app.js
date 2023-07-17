@@ -8,6 +8,8 @@ require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const pokemonRouter = require("./routes/pokemon");
+const { errorHandler } = require("./middleware/errorHandler");
 
 const app = express();
 
@@ -33,6 +35,9 @@ mongoose
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/pokemon", pokemonRouter);
+
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

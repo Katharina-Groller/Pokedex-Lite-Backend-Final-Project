@@ -15,8 +15,17 @@ const User = mongoose.model("User", userSchema);
 
 //Create User
 async function createUser(userData) {
-    return await User.create(userData);
+    try {
+        const user = new User(userData);
+        return await user.save();
+    } catch (error) {
+        const err = new Error(error);
+        err.statusCode = 501;
+        err.message = "datenbank fehler";
+        throw err;
+    }
 }
+
 //Find all User
 async function findAllUser() {
     return await User.find({});
@@ -46,14 +55,13 @@ async function deleteUser(User, id) {
 }
 
 async function authenticateUser(username, password) {
-    console.log("ander", username, password);
     const user = await User.findOne({ username });
-    console.log("User:", user);
+
     if (!user) {
         return null;
     }
     const passwortValid = await user.authenticate(password);
-    console.log("password:", passwortValid);
+
     if (!passwortValid) {
         return null;
     }
