@@ -21,6 +21,7 @@ async function findAllPokemon() {
 //Find Single User
 async function findSinglePokemon(name) {
     const pokemon = await Pokemon.findOne({ name });
+    console.log(pokemon);
     if (pokemon === null) {
         const error = new Error("Pokemon existiert nicht");
         error.statusCode = 404;

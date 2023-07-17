@@ -38,7 +38,6 @@ async function httpAddPokemon(req, res, next) {
     try {
         const { name, id } = req.body;
         const availablePokemon = await addPokemon(name, id);
-        console.log("avail:", availablePokemon);
         if (!availablePokemon) {
             return res.status(400).send({ message: "Pokemon nicht vorhanden" });
         }

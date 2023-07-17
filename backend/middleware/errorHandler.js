@@ -4,6 +4,7 @@ function errorHandler(err, req, res, next) {
     res.status(statusCode).json({
         statusCode: statusCode,
         messages: err.messages,
+        message: err.message,
     });
 }
 
@@ -17,7 +18,7 @@ async function userNotFound(Model, id) {
     return user;
 }
 
-async function pokemonNotFound(model, name) {
+async function pokemonNotFound(Model, name) {
     const pokemon = await Model.findOne({ name: name });
     if (!pokemon) {
         const error = new Error("Pokemon nicht gefunden");
